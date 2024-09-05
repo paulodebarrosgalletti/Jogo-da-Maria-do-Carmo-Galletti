@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import MainMenu from "./components/MainMenu";
+import Profile from "./components/Profile";
+import Rank from "./components/Rank";
+import Matchmaking from "./components/Matchmaking"; // Se ainda precisar desta rota
+import AvailableGames from "./components/AvailableGames"; // Nova tela de jogos disponíveis
+import Game from "./components/Game"; // Tela do jogo
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/main" element={<MainMenu />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/rank" element={<Rank />} />
+        <Route path="/matchmaking" element={<Matchmaking />} />{" "}
+        {/* Se necessário */}
+        <Route path="/available-games" element={<AvailableGames />} />{" "}
+        {/* Nova rota */}
+        <Route path="/game" element={<Game />} />
+      </Routes>
+    </Router>
   );
 }
 
