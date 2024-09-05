@@ -14,13 +14,18 @@ import {
 const AvailableGames = () => {
   const [games, setGames] = useState([]);
   const [userName, setUserName] = useState("");
+  const [currentGameId, setCurrentGameId] = useState(null); // Controlar o estado do jogo atual
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserName = async () => {
-      const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
-      if (userDoc.exists()) {
-        setUserName(userDoc.data().firstName); // Ajuste conforme o campo que está salvando o nome
+      try {
+        const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+        if (userDoc.exists()) {
+          setUserName(userDoc.data().firstName); // Ajuste conforme o campo que está salvando o nome
+        }
+      } catch (error) {
+        console.error("Erro ao buscar nome do usuário:", error);
       }
     };
 
@@ -40,50 +45,62 @@ const AvailableGames = () => {
   }, []);
 
   const createGame = async () => {
-    // Cria um novo jogo
-    const gameRef = await addDoc(collection(db, "games"), {
-      creator: userName,
-      creatorId: auth.currentUser.uid,
-      status: "waiting", // Status inicial da partida
-      createdAt: new Date(),
-      players: [auth.currentUser.uid], // Lista de jogadores com o criador inicialmente
-    });
+    try {
+      // Cria um novo jogo
+      const gameRef = await addDoc(collection(db, "games"), {
+        creator: userName,
+        creatorId: auth.currentUser.uid,
+        status: "waiting", // Status inicial da partida
+        createdAt: new Date(),
+        players: [auth.currentUser.uid], // Lista de jogadores com o criador inicialmente
+        passwords: [null, null], // Inicializa com senhas nulas para ambos
+      });
 
-    console.log("Jogo criado com ID:", gameRef.id);
+      console.log("Jogo criado com ID:", gameRef.id);
+      setCurrentGameId(gameRef.id); // Armazena o ID do jogo criado
+    } catch (error) {
+      console.error("Erro ao criar jogo:", error);
+    }
   };
 
   const joinGame = async (gameId) => {
-    // Atualiza o jogo para incluir o jogador atual
-    const gameDocRef = doc(db, "games", gameId);
-    const gameDoc = await getDoc(gameDocRef);
+    try {
+      // Atualiza o jogo para incluir o jogador atual
+      const gameRef = doc(db, "games", gameId);
+      const gameSnapshot = await getDoc(gameRef);
+      const gameData = gameSnapshot.data();
 
-    if (gameDoc.exists()) {
-      const gameData = gameDoc.data();
-      if (gameData.players.length < 2) {
-        await updateDoc(gameDocRef, {
+      if (gameData && gameData.players.length < 2) {
+        await updateDoc(gameRef, {
           players: [...gameData.players, auth.currentUser.uid], // Adiciona o jogador atual
-          status: "ready", // Muda o status para pronto quando dois jogadores entram
+          status: "ready", // Muda o status para 'ready' quando dois jogadores entram
         });
+        setCurrentGameId(gameId); // Armazena o ID do jogo em que entrou
+        navigate(`/game/${gameId}`); // Redireciona para o jogo
       }
+    } catch (error) {
+      console.error("Erro ao entrar no jogo:", error);
     }
   };
 
   useEffect(() => {
-    // Monitora a coleção 'games' para redirecionar para o jogo quando o status mudar para 'ready'
-    const unsubscribe = onSnapshot(collection(db, "games"), (snapshot) => {
-      snapshot.docs.forEach((doc) => {
+    // Monitorar o estado do jogo atual para redirecionar corretamente
+    if (currentGameId) {
+      const gameRef = doc(db, "games", currentGameId);
+      const unsubscribe = onSnapshot(gameRef, (doc) => {
         const gameData = doc.data();
         if (
+          gameData &&
           gameData.status === "ready" &&
           gameData.players.includes(auth.currentUser.uid)
         ) {
-          navigate("/game"); // Redireciona para a tela de jogo
+          navigate(`/game/${currentGameId}`); // Redireciona para a tela de jogo se o status for 'ready'
         }
       });
-    });
 
-    return () => unsubscribe();
-  }, [navigate]);
+      return () => unsubscribe();
+    }
+  }, [currentGameId, navigate]);
 
   return (
     <div>

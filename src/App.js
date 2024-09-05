@@ -5,9 +5,8 @@ import Register from "./components/Register";
 import MainMenu from "./components/MainMenu";
 import Profile from "./components/Profile";
 import Rank from "./components/Rank";
-import Matchmaking from "./components/Matchmaking"; // Se ainda precisar desta rota
-import AvailableGames from "./components/AvailableGames"; // Nova tela de jogos disponíveis
-import Game from "./components/Game"; // Tela do jogo
+import AvailableGames from "./components/AvailableGames";
+import Game from "./components/Game"; // Importar o componente Game corretamente
 
 function App() {
   return (
@@ -18,11 +17,9 @@ function App() {
         <Route path="/main" element={<MainMenu />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/rank" element={<Rank />} />
-        <Route path="/matchmaking" element={<Matchmaking />} />{" "}
-        {/* Se necessário */}
-        <Route path="/available-games" element={<AvailableGames />} />{" "}
-        {/* Nova rota */}
-        <Route path="/game" element={<Game />} />
+        <Route path="/available-games" element={<AvailableGames />} />
+        <Route path="/game/:gameId" element={<Game />} />{" "}
+        {/* Verifique se esta rota está correta */}
       </Routes>
     </Router>
   );
