@@ -63,9 +63,20 @@ const Game = () => {
     return () => unsubscribe();
   }, [gameId, playerPosition]);
 
+  const validateUniqueDigits = (input) => {
+    const digits = input.split("");
+    const uniqueDigits = new Set(digits);
+    return uniqueDigits.size === digits.length;
+  };
+
   const confirmPassword = async () => {
     if (password.length !== 4) {
       alert("A senha deve ter 4 dígitos.");
+      return;
+    }
+
+    if (!validateUniqueDigits(password)) {
+      alert("A senha não pode conter números repetidos.");
       return;
     }
 
@@ -96,9 +107,14 @@ const Game = () => {
       return;
     }
 
+    if (!validateUniqueDigits(guess)) {
+      alert("O palpite não pode conter números repetidos.");
+      return;
+    }
+
     const opponentPassword = gameData.passwords[1 - playerPosition];
     const newFeedback = getFeedback(guess, opponentPassword);
-    const updatedFeedback = [...feedback, newFeedback];
+    const updatedFeedback = [...feedback, { guess, message: newFeedback }];
     setFeedback(updatedFeedback);
 
     const gameRef = doc(db, "games", gameId);
@@ -191,7 +207,9 @@ const Game = () => {
           <h4>Seus Palpites:</h4>
           <ul>
             {feedback.map((fb, index) => (
-              <li key={index}>{fb}</li>
+              <li key={index}>
+                Palpite: {fb.guess} - {fb.message}
+              </li>
             ))}
           </ul>
         </div>
@@ -204,7 +222,9 @@ const Game = () => {
         <h4>Palpites do Oponente:</h4>
         <ul>
           {opponentFeedback.map((fb, index) => (
-            <li key={index}>{fb}</li>
+            <li key={index}>
+              Palpite: {fb.guess} - {fb.message}
+            </li>
           ))}
         </ul>
       </div>
