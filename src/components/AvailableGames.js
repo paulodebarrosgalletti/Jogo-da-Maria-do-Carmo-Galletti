@@ -114,19 +114,22 @@ const AvailableGames = () => {
         Criar Jogo
       </button>
       <ul className="available-games-list">
-        {games.map((game) => (
-          <li key={game.id} className="available-games-item">
-            <span>Jogo criado por: {game.creator}</span>
-            {game.players.length < 2 && (
-              <button
-                className="available-games-button"
-                onClick={() => joinGame(game.id)}
-              >
-                Jogar
-              </button>
-            )}
-          </li>
-        ))}
+        {games
+          .filter((game) => game.status !== "completed") // Filtra jogos que não estão completos
+          .map((game) => (
+            <li key={game.id} className="available-games-item">
+              <span>Jogo criado por: {game.creator}</span>
+              {game.players.length < 2 &&
+                game.creatorId !== auth.currentUser.uid && ( // Verifica se o jogador atual não é o criador
+                  <button
+                    className="available-games-button"
+                    onClick={() => joinGame(game.id)}
+                  >
+                    Jogar
+                  </button>
+                )}
+            </li>
+          ))}
       </ul>
     </div>
   );
