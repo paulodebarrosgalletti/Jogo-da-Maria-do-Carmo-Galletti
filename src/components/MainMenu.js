@@ -17,12 +17,12 @@ const MainMenu = () => {
       <button className="main-menu-button" onClick={() => navigate("/profile")}>
         Perfil
       </button>
-      {/* <button className="main-menu-button" onClick={() => navigate("/rank")}>
-        Rank
-      </button> */}
-      <button className="main-menu-button" onClick={modoRanqueadoDesativado}>
+      <button className="main-menu-button" onClick={() => navigate("/rank")}>
         Rank
       </button>
+      {/* <button className="main-menu-button" onClick={modoRanqueadoDesativado}>
+        Rank
+      </button> */}
       <button
         className="main-menu-button"
         onClick={() => navigate("/available-games")}
