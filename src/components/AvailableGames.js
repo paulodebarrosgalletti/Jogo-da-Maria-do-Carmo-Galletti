@@ -113,6 +113,7 @@ const AvailableGames = () => {
       >
         Voltar
       </button>
+
       <button className="available-games-button" onClick={createGame}>
         Criar Jogo
       </button>

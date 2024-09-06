@@ -7,6 +7,7 @@ import Profile from "./components/Profile";
 import Rank from "./components/Rank";
 import AvailableGames from "./components/AvailableGames";
 import Game from "./components/Game"; // Importar o componente Game corretamente
+import Rules from "./components/Rules";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/rank" element={<Rank />} />
         <Route path="/available-games" element={<AvailableGames />} />
+        <Route path="/rules" element={<Rules />} />
         <Route path="/game/:gameId" element={<Game />} />{" "}
         {/* Verifique se esta rota está correta */}
       </Routes>
