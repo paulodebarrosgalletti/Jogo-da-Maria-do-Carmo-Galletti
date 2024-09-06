@@ -24,7 +24,7 @@ const Profile = () => {
       <button className="profile-button" onClick={() => auth.signOut()}>
         Sair
       </button>
-      <button className="profile-button" onClick={() => navigate(-1)}>
+      <button className="profile-button" onClick={() => navigate("/main")}>
         Voltar
       </button>
     </div>

@@ -107,7 +107,10 @@ const AvailableGames = () => {
   return (
     <div className="available-games-container">
       <h2 className="available-games-title">Jogadores Disponíveis</h2>
-      <button className="available-games-button" onClick={() => navigate(-1)}>
+      <button
+        className="available-games-button"
+        onClick={() => navigate("/main")}
+      >
         Voltar
       </button>
       <button className="available-games-button" onClick={createGame}>
@@ -115,12 +118,14 @@ const AvailableGames = () => {
       </button>
       <ul className="available-games-list">
         {games
-          .filter((game) => game.status !== "completed") // Filtra jogos que não estão completos
+          .filter(
+            (game) => game.status !== "completed" && game.status !== "forfeited"
+          ) // Filtra jogos encerrados
           .map((game) => (
             <li key={game.id} className="available-games-item">
               <span>Jogo criado por: {game.creator}</span>
               {game.players.length < 2 &&
-                game.creatorId !== auth.currentUser.uid && ( // Verifica se o jogador atual não é o criador
+                game.creatorId !== auth.currentUser.uid && (
                   <button
                     className="available-games-button"
                     onClick={() => joinGame(game.id)}
