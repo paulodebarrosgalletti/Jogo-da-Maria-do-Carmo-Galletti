@@ -7,13 +7,20 @@ import "./css/MainMenu.css";
 const MainMenu = () => {
   const navigate = useNavigate();
 
+  const modoRanqueadoDesativado = () => {
+    window.alert("o Modo ranqueado ainda não está disponível");
+  };
+
   return (
     <div className="main-menu-container">
       <h2 className="main-menu-title">Menu Principal</h2>
       <button className="main-menu-button" onClick={() => navigate("/profile")}>
         Perfil
       </button>
-      <button className="main-menu-button" onClick={() => navigate("/rank")}>
+      {/* <button className="main-menu-button" onClick={() => navigate("/rank")}>
+        Rank
+      </button> */}
+      <button className="main-menu-button" onClick={modoRanqueadoDesativado}>
         Rank
       </button>
       <button
