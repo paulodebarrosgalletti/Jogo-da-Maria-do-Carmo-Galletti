@@ -1,0 +1,74 @@
+/* Rank.css */
+
+.rank-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f4f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .rank-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .rank-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .rank-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    margin: 8px 0;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+  }
+  
+  .rank-item:hover {
+    transform: translateY(-2px);
+  }
+  
+  .rank-item:nth-child(odd) {
+    background-color: #e9eff5;
+  }
+  
+  .rank-position {
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  .rank-name {
+    font-weight: normal;
+    color: #555;
+  }
+  
+  .rank-score {
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  .profile-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .profile-button:hover {
+    background-color: #0056b3;
+  }
+  
