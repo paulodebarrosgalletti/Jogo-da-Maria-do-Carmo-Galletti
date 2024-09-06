@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 
+import "./css/Login.css";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,10 +23,11 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+    <div className="login-container">
+      <h2 className="login-title">Login</h2>
+      <form className="login-form" onSubmit={handleLogin}>
         <input
+          className="login-input"
           type="email"
           placeholder="Email"
           value={email}
@@ -32,16 +35,21 @@ const Login = () => {
           required
         />
         <input
+          className="login-input"
           type="password"
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Entrar</button>
-        {error && <p>{error}</p>}
+        <button className="login-button" type="submit">
+          Entrar
+        </button>
+        {error && <p className="login-error">{error}</p>}
       </form>
-      <button onClick={() => navigate("/register")}>Registrar-se</button>
+      <button className="login-button" onClick={() => navigate("/register")}>
+        Registrar-se
+      </button>
     </div>
   );
 };

@@ -10,6 +10,8 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 
+import "./css/Game.css";
+
 const Game = () => {
   const { gameId } = useParams(); // Obtém o gameId da URL
   const [password, setPassword] = useState("");
@@ -165,68 +167,77 @@ const Game = () => {
   if (!gameData) return <p>Carregando dados do jogo...</p>;
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div style={{ width: "45%" }}>
-        <h2>Sua Área</h2>
-        {opponentLeft && <p>O oponente abandonou a partida.</p>}
-        <p>Jogador: {auth.currentUser.displayName}</p>
-        {confirmedPassword ? (
+    <div className="game-container">
+      <div className="game-section">
+        <div className="game-area">
+          <h2>Sua Área</h2>
+          {opponentLeft && <p>O oponente abandonou a partida.</p>}
+          <p>Jogador: {auth.currentUser.displayName}</p>
+          {confirmedPassword ? (
+            <div>
+              <h3>Sua senha: {password}</h3>
+              <h3>Senha do oponente: {opponentPassword}</h3>
+            </div>
+          ) : (
+            <div>
+              <input
+                className="game-input"
+                type="password"
+                placeholder="Digite sua senha de 4 dígitos"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                maxLength={4}
+              />
+              <button className="game-button" onClick={confirmPassword}>
+                Confirmar Senha
+              </button>
+            </div>
+          )}
+          {turn === auth.currentUser.uid && (
+            <div>
+              <h3>Seu turno! Tente adivinhar a senha do oponente.</h3>
+              <input
+                className="game-input"
+                type="text"
+                placeholder="Palpite de 4 dígitos"
+                value={guess}
+                onChange={(e) => setGuess(e.target.value)}
+                maxLength={4}
+              />
+              <button className="game-button" onClick={makeGuess}>
+                Fazer Palpite
+              </button>
+            </div>
+          )}
+          {turn !== auth.currentUser.uid && (
+            <p>Aguardando o palpite do oponente...</p>
+          )}
           <div>
-            <h3>Sua senha: {password}</h3>
-            <h3>Senha do oponente: {opponentPassword}</h3>
+            <h4>Seus Palpites:</h4>
+            <ul className="game-list">
+              {feedback.map((fb, index) => (
+                <li key={index} className="game-item">
+                  Palpite: {fb.guess} - {fb.message}
+                </li>
+              ))}
+            </ul>
           </div>
-        ) : (
-          <div>
-            <input
-              type="password"
-              placeholder="Digite sua senha de 4 dígitos"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              maxLength={4}
-            />
-            <button onClick={confirmPassword}>Confirmar Senha</button>
-          </div>
-        )}
-        {turn === auth.currentUser.uid && (
-          <div>
-            <h3>Seu turno! Tente adivinhar a senha do oponente.</h3>
-            <input
-              type="text"
-              placeholder="Palpite de 4 dígitos"
-              value={guess}
-              onChange={(e) => setGuess(e.target.value)}
-              maxLength={4}
-            />
-            <button onClick={makeGuess}>Fazer Palpite</button>
-          </div>
-        )}
-        {turn !== auth.currentUser.uid && (
-          <p>Aguardando o palpite do oponente...</p>
-        )}
-        <div>
-          <h4>Seus Palpites:</h4>
-          <ul>
-            {feedback.map((fb, index) => (
-              <li key={index}>
+          <button className="game-button" onClick={leaveGame}>
+            Sair do Jogo
+          </button>
+        </div>
+
+        <div className="game-area">
+          <h2>Área do Oponente</h2>
+          <h4>Palpites do Oponente:</h4>
+          <ul className="game-list">
+            {opponentFeedback.map((fb, index) => (
+              <li key={index} className="game-item">
                 Palpite: {fb.guess} - {fb.message}
               </li>
             ))}
           </ul>
         </div>
-        <button onClick={leaveGame}>Sair do Jogo</button>{" "}
-        {/* Botão para sair do jogo */}
-      </div>
-
-      <div style={{ width: "45%" }}>
-        <h2>Área do Oponente</h2>
-        <h4>Palpites do Oponente:</h4>
-        <ul>
-          {opponentFeedback.map((fb, index) => (
-            <li key={index}>
-              Palpite: {fb.guess} - {fb.message}
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

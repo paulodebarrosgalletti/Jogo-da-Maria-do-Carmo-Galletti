@@ -11,6 +11,8 @@ import {
   getDoc,
 } from "firebase/firestore";
 
+import "./css/AvailableGames.css";
+
 const AvailableGames = () => {
   const [games, setGames] = useState([]);
   const [userName, setUserName] = useState("");
@@ -103,17 +105,25 @@ const AvailableGames = () => {
   }, [currentGameId, navigate]);
 
   return (
-    <div>
-      <h2>Jogadores Disponíveis</h2>
-      <button onClick={() => navigate(-1)}>Voltar</button>{" "}
-      {/* Botão para voltar */}
-      <button onClick={createGame}>Criar Jogo</button>
-      <ul>
+    <div className="available-games-container">
+      <h2 className="available-games-title">Jogadores Disponíveis</h2>
+      <button className="available-games-button" onClick={() => navigate(-1)}>
+        Voltar
+      </button>
+      <button className="available-games-button" onClick={createGame}>
+        Criar Jogo
+      </button>
+      <ul className="available-games-list">
         {games.map((game) => (
-          <li key={game.id}>
+          <li key={game.id} className="available-games-item">
             <span>Jogo criado por: {game.creator}</span>
             {game.players.length < 2 && (
-              <button onClick={() => joinGame(game.id)}>Jogar</button>
+              <button
+                className="available-games-button"
+                onClick={() => joinGame(game.id)}
+              >
+                Jogar
+              </button>
             )}
           </li>
         ))}

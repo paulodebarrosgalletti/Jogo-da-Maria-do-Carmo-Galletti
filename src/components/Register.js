@@ -5,6 +5,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
 
+import "./css/Register.css";
+
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,10 +44,11 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h2>Registrar</h2>
-      <form onSubmit={handleRegister}>
+    <div className="register-container">
+      <h2 className="register-title">Registrar</h2>
+      <form className="register-form" onSubmit={handleRegister}>
         <input
+          className="register-input"
           type="text"
           placeholder="Nome"
           value={firstName}
@@ -53,6 +56,7 @@ const Register = () => {
           required
         />
         <input
+          className="register-input"
           type="text"
           placeholder="Sobrenome"
           value={lastName}
@@ -60,6 +64,7 @@ const Register = () => {
           required
         />
         <input
+          className="register-input"
           type="text"
           placeholder="Apelido"
           value={nickname}
@@ -67,6 +72,7 @@ const Register = () => {
           required
         />
         <input
+          className="register-input"
           type="email"
           placeholder="Email"
           value={email}
@@ -74,16 +80,21 @@ const Register = () => {
           required
         />
         <input
+          className="register-input"
           type="password"
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Registrar</button>
-        {error && <p>{error}</p>}
+        <button className="register-button" type="submit">
+          Registrar
+        </button>
+        {error && <p className="register-error">{error}</p>}
       </form>
-      <button onClick={() => navigate("/")}>Voltar para Login</button>
+      <button className="register-button" onClick={() => navigate("/")}>
+        Voltar para Login
+      </button>
     </div>
   );
 };

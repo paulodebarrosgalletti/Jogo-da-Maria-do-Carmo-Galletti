@@ -1,0 +1,59 @@
+/* AvailableGames.css */
+.available-games-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.available-games-title {
+    color: #4a90e2;
+    margin-bottom: 20px;
+}
+
+.available-games-button {
+    margin: 10px 5px;
+    padding: 10px 15px;
+    background-color: #4a90e2;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.available-games-button:hover {
+    background-color: #357ABD;
+}
+
+.available-games-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.available-games-item {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #e9efff;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .available-games-container {
+        width: 95%;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1600px) {
+    .available-games-container {
+        width: 80%;
+    }
+}
