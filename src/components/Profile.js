@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { auth } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 
+import "./css/Profile.css";
+
 const Profile = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -16,12 +18,15 @@ const Profile = () => {
   }
 
   return (
-    <div>
-      <h2>Perfil</h2>
-      <p>Email: {user.email}</p>
-      <button onClick={() => auth.signOut()}>Sair</button>
-      <button onClick={() => navigate(-1)}>Voltar</button>{" "}
-      {/* Botão de Voltar */}
+    <div className="profile-container">
+      <h2 className="profile-title">Perfil</h2>
+      <p className="profile-email">Email: {user.email}</p>
+      <button className="profile-button" onClick={() => auth.signOut()}>
+        Sair
+      </button>
+      <button className="profile-button" onClick={() => navigate(-1)}>
+        Voltar
+      </button>
     </div>
   );
 };

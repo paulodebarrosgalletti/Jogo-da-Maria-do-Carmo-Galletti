@@ -1,0 +1,48 @@
+/* Profile.css */
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f4f9;
+}
+
+.profile-title {
+    color: #4a90e2;
+    margin-bottom: 20px;
+}
+
+.profile-email {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.profile-button {
+    padding: 10px 20px;
+    margin: 10px 5px;
+    background-color: #4a90e2;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.profile-button:hover {
+    background-color: #357ABD;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .profile-container {
+        width: 95%;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1600px) {
+    .profile-container {
+        width: 70%;
+    }
+}
